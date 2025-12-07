@@ -1,0 +1,14 @@
+{
+  "tokens": {},          // हर user की API key
+  "lastActive": {},      // user last active timestamp
+  "admins": [],          // allowed admins
+  "premium": [],         // premium users list
+  "adsMessage": "",      // default ads
+  "headerText": "",
+  "footerText": "",
+  "adStats": {
+    "totalDelivered": 0,
+    "totalFailed": 0,
+    "history": []
+  }
+}
