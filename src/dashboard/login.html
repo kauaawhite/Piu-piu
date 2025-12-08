@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>PikaShort Admin Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<style>
-body { margin:0;padding:0;height:100vh;background:linear-gradient(135deg,#060b25,#0e1635,#111b3e);display:flex;justify-content:center;align-items:center;font-family:Poppins,Arial;color:#fff; }
-.circle{position:absolute;border-radius:50%;background:rgba(124,77,255,0.12);animation:float 8s infinite ease-in-out}
-.circle:nth-child(1){width:120px;height:120px;top:10%;left:15%}
-.circle:nth-child(2){width:80px;height:80px;bottom:15%;right:10%;animation-delay:2s}
-.circle:nth-child(3){width:100px;height:100px;top:60%;left:5%;animation-delay:4s}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-25px)}100%{transform:translateY(0)}}
-.login-container{width:340px;padding:30px;background:rgba(255,255,255,0.04);backdrop-filter:blur(12px);border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 0 20px rgba(124,77,255,0.12)}
-h2{text-align:center;margin-bottom:18px;color:#cdb7ff}
-input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:none;background:rgba(255,255,255,0.06);color:#fff}
-button{width:100%;padding:12px;margin-top:10px;background:#7c4dff;border:none;border-radius:10px;color:#fff;cursor:pointer}
-#error{display:none;color:#ff8080;text-align:center;margin-top:8px}
-</style>
+<link rel="stylesheet" href="/dashboard/static/style.css">
 </head>
-<body>
-<div class="circle"></div><div class="circle"></div><div class="circle"></div>
-<div class="login-container">
-  <h2>Admin Login</h2>
-  <input id="chatid" type="text" placeholder="Enter Admin Chat ID" />
-  <input id="password" type="password" placeholder="Enter Password" />
-  <button onclick="login()">Login</button>
-  <div id="error">Invalid chat ID or password</div>
+
+<body class="login-body">
+
+<div class="login-box">
+    <h2>PikaShort Admin Login</h2>
+
+    <div class="input-group">
+        <label>Admin Chat ID</label>
+        <input id="chatId" type="text" placeholder="Enter Admin Chat ID">
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input id="password" type="password" placeholder="Enter Password">
+    </div>
+
+    <button onclick="loginNow()">Login</button>
+
+    <p id="loginStatus"></p>
 </div>
 
 <script>
-async function login() {
-  const chatid = document.getElementById('chatid').value.trim();
-  const password = document.getElementById('password').value.trim();
-  try {
-    const res = await fetch('/dashboard/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ chatid, password })});
-    const j = await res.json();
-    if (j.success) return window.location.href = '/dashboard/main';
-    document.getElementById('error').style.display = 'block';
-  } catch (e) {
-    document.getElementById('error').style.display = 'block';
-  }
+async function loginNow() {
+    let chatId = document.getElementById("chatId").value.trim();
+    let password = document.getElementById("password").value.trim();
+
+    let res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type":"application/json" },
+        body: JSON.stringify({ chatId, password })
+    });
+
+    let data = await res.json();
+    if (data.success) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/dashboard?token=" + data.token;
+    } else {
+        document.getElementById("loginStatus").innerText = "❌ " + data.error;
+    }
 }
 </script>
+
 </body>
 </html>
