@@ -1,13 +1,19 @@
 {
-  "tokens": {},          // हर user की API key
-  "lastActive": {},      // user last active timestamp
-  "admins": [],          // allowed admins
-  "premium": [],         // premium users lis
+  "tokens": {},
+  "lastActive": {},
   "admins": ["6358090699"],
-  "adsMessage": "🔥 Special Offer! Shorten links & earn more",     // default a
+  "premium": [],
+  "adsMessage": "🔥 Special Offer! Shorten links & earn more 🚀",
+  "headerText": "",
+  "footerText": "",
+  "inactiveMessage": "👋 Hey! It’s been a while since you used me.\nNeed to shorten links? Just send me any URL 🔗\nI'm here to help 😎",
   "adStats": {
+    "totalSent": 0,
     "totalDelivered": 0,
     "totalFailed": 0,
     "history": []
-  }
+  },
+  "shortCache": {},
+  "lastUploads": [],
+  "uploadsCache": {}
 }
